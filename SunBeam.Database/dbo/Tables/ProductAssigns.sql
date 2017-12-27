@@ -1,0 +1,27 @@
+﻿CREATE TABLE [dbo].[ProductAssigns] (
+    [Id]              INT             NOT NULL,
+    [InvoiecNo]       NVARCHAR (200)  NULL,
+    [ProductId]       INT             NULL,
+    [CustomerId]      INT             NULL,
+    [ZoneOrAreaId]    INT             NULL,
+    [EmployeeId]      INT             NULL,
+    [TotalDiscount]   DECIMAL (18, 2) NULL,
+    [TotalSlup]       DECIMAL (18, 2) NULL,
+    [TotalQuantity]   DECIMAL (18, 2) NULL,
+    [TotalPaid]       DECIMAL (18, 2) NULL,
+    [TotalPrice]      DECIMAL (18, 2) NULL,
+    [GrandTotal]      DECIMAL (18, 2) NULL,
+    [Date]            NVARCHAR (50)   NULL,
+    [OpeningQuantity] DECIMAL (18, 2) NULL,
+    [Remarks]         NVARCHAR (500)  NULL,
+    [IsActive]        BIT             NULL,
+    [IsArchive]       BIT             NULL,
+    [CreatedBy]       NVARCHAR (50)   NULL,
+    [CreatedAt]       NVARCHAR (50)   NULL,
+    [CreatedFrom]     NVARCHAR (50)   NULL,
+    [LastUpdateBy]    NVARCHAR (50)   NULL,
+    [LastUpdateAt]    NVARCHAR (50)   NULL,
+    [LastUpdateFrom]  NVARCHAR (50)   NULL,
+    CONSTRAINT [PK_ProductAssigns] PRIMARY KEY CLUSTERED ([Id] ASC)
+);
+

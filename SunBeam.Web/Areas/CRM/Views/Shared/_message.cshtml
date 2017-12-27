@@ -1,0 +1,19 @@
+﻿
+<script>
+    (function () {
+        alert('@TempData["msg"]')
+        if ('@TempData["msg"]' != null) {
+            debugger;
+            var data = '@TempData["msg"]';
+
+            $.smallBox({
+                title: "James Simmons liked your comment",
+                content: "<i class='fa fa-clock-o'></i> <i>2 seconds ago...</i>",
+                color: "#296191",
+                iconSmall: "fa fa-thumbs-up bounce animated",
+                timeout: 4000
+            });
+
+        }
+    });
+</script>

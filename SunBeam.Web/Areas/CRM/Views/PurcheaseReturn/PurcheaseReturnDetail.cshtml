@@ -1,0 +1,24 @@
+﻿
+@model SunBeam.Domain.Models.PurcheaseReturnDetails
+<tr class="dpro">
+    @using (Html.BeginCollectionItem("PurcheaseDetails"))
+    {
+        @Html.HiddenFor(m => m.ProductName)
+        @Html.HiddenFor(m => m.PurchaseId)
+        @Html.HiddenFor(m => m.ProductId, new { @class = "pid" })
+        @Html.HiddenFor(m => m.ProductCode)
+        @Html.HiddenFor(m => m.Quantity, new { @class = "dquans" })
+        @Html.HiddenFor(m => m.UnitePrice, new { @class = "dunitp" })
+        <td><a class="btn btn-info btn-xs" onclick="Edit(this)">Edit</a><a class="btn btn-warning btn-xs" onclick="Removerow(this)">Del</a> </td>
+        <td>@Html.DisplayFor(m => m.ProductName)</td>
+        <td>@Html.DisplayFor(m => m.UnitePrice)</td>
+                <td>@Html.DisplayFor(m => m.Quantity)</td>
+                <td class="amount">@Html.DisplayFor(m => m.TotalPrice)</td>
+    }
+</tr>
+
+@section pagespecific {
+    <script type="text/javascript">
+
+    </script>
+}

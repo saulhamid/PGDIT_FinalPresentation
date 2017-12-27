@@ -1,0 +1,66 @@
+﻿--CREATE proc  [dbo].[SP_ProductDetailInsert]
+--(
+--@ProductId int = null
+--,@PurcheaseId int = null
+--,@SalesId  int = null
+--,@SalesReturnId  int = null
+--,@PurcheaseReturnId int = null
+--,@Date nvarchar(50) = null
+--,@TotalQuantity decimal = null
+--,@TotalReplace decimal = null
+--,@TotalReturn decimal = null
+--,@TotalDiscount decimal = null
+--,@TotalSlup decimal = null
+--,@FinalUnitPrice decimal = null
+--,@TotalPaid decimal = null
+--,@Remarks decimal = null
+--,@StockStutes bit = null
+--,@LastUpdateBy nvarchar(50) = null
+--,@LastUpdateAt nvarchar(50) = null
+--,@LastUpdateFrom nvarchar(50) = null
+--)
+--as
+--begin
+--DECLARE @TotalQuantity1 decimal
+--DECLARE @Date1 nvarchar(50)
+--DECLARE @TotalReplace1 decimal
+--DECLARE @TotalReturn1 decimal
+--DECLARE @TotalSlup1 decimal
+--DECLARE @TotalDiscount1 decimal
+--DECLARE @FinalUnitPrice1 decimal
+--DECLARE @TotalPaid1 decimal
+--DECLARE @StockId int
+--DECLARE @Remarks1 decimal
+--DECLARE @rowcount int
+
+--select @TotalQuantity1=prod.Quantity from PurcheaseDetails prod where prod.ProductId=@ProductId and prod.PurchaseId=@PurcheaseId
+--UPDATE  dbo . Stocks SET 
+--TotalQuantity= (case  when @TotalQuantity is not null then @TotalQuantity-@TotalQuantity1 end)
+--WHERE  (@ProductId  IS  NULL OR (ProductId  = @ProductId ))
+--delete PurcheaseDetails where ProductId=@ProductId
+--INSERT INTO  dbo . PurcheaseDetails ( PurchaseId ,ProductId,UnitePrice  ,Date ,Quantity 
+--,Discount  ,Remarks ,IsActive  ,IsArchive ,CreatedAt ,CreatedFrom ,CreatedAtBy  )
+--VALUES( @PurcheaseId,@ProductId,@FinalUnitPrice,@Date,@TotalQuantity,@TotalDiscount  
+--,@Remarks,1 ,0 ,@LastUpdateBy ,@LastUpdateAt ,@LastUpdateFrom     )
+--select @rowcount=COUNT(*) from dbo.Stocks  where ProductId=@ProductId 
+--if @rowcount > 0
+--begin
+--select @StockId=Id, @TotalQuantity1=TotalQuantity,@Date1=Date,@TotalReplace1=TotalReplace
+--,@TotalReturn1=TotalReturn,@TotalSlup1=TotalSlup,@TotalDiscount1=TotalDiscount
+--,@FinalUnitPrice1=FinalUnitPrice,@TotalPaid1=TotalPaid from dbo.Stocks  where ProductId=@ProductId
+--UPDATE  dbo . Stocks SET 
+-- TotalQuantity= (case  when @TotalQuantity is not null then @TotalQuantity+@TotalQuantity1 end)
+--,Date= (case when @Date is not null then @Date else @Date1 end)
+--,Remarks= (case when @Remarks is not null then @Remarks else @Remarks1 end)
+--,StockStutes= (case when @StockStutes is not null then @StockStutes end)
+--,LastUpdateBy= (case when @LastUpdateBy is not null then @LastUpdateBy end)
+--,LastUpdateAt= (case when @LastUpdateAt is not null then @LastUpdateAt end)
+--,LastUpdateFrom= (case when @LastUpdateFrom is not null then @LastUpdateFrom end)
+--WHERE  (@ProductId  IS  NULL OR (ProductId  = @ProductId ))
+--end
+--else 
+--begin
+--exec SP_StockInsert @ProductId=@ProductId,@TotalQuantity=@TotalQuantity,@TotalDiscount=@TotalDiscount,@Date=@Date,@Remarks=@Remarks,@StockStutes=1,
+--@LastUpdateBy=@LastUpdateBy,@LastUpdateAt=@LastUpdateAt,@LastUpdateFrom=@LastUpdateFrom
+--end
+--end

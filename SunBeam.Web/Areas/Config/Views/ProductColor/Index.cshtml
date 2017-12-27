@@ -1,0 +1,155 @@
+﻿@model SunBeam.Domain.Models.ProductColor
+@{
+    ViewBag.Title = "Index";
+}
+<!-- MAIN CONTENT -->
+<div id="content">
+    <p class="alert alert-info">
+        <button class="btn btn-primary " href="/Config/ProductColor/Create" data-toggle="modal" data-target="#CreateData">
+            Add ProductColor
+        </button>
+        <button class="btn btn-warning " data-url="/Config/ProductColor/Delete" onclick="deletedData(this, 'myDataTable');">
+            Delete
+        </button>
+    </p>
+    <!-- widget grid -->
+    <section id="widget-grid" class="">
+
+        <!-- row -->
+        <div class="row">
+
+
+            <!-- NEW WIDGET START -->
+            <article class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+
+
+                <!-- Widget ID (each widget will need unique ID)-->
+                <div class="jarviswidget jarviswidget-color-blueDark" id="wid-id-1" data-widget-editbutton="false">
+                    <!-- widget options:
+                    usage: <div class="jarviswidget" id="wid-id-0" data-widget-editbutton="false">
+
+                    data-widget-colorbutton="false"
+                    data-widget-editbutton="false"
+                    data-widget-togglebutton="false"
+                    data-widget-deletebutton="false"
+                    data-widget-fullscreenbutton="false"
+                    data-widget-custombutton="false"
+                    data-widget-collapsed="true"
+                    data-widget-sortable="false"
+
+                    -->
+                    <header>
+                        <span class="widget-icon"> <i class="fa fa-table"></i> </span>
+                        <h2>Column Filters </h2>
+
+                    </header>
+
+                    <!-- widget div-->
+                    <div>
+
+                        <!-- widget edit box -->
+                        <div class="jarviswidget-editbox">
+                            <!-- This area used as dropdown edit box -->
+
+                        </div>
+                        <!-- end widget edit box -->
+                        <!-- widget content -->
+                        <div class="widget-body no-padding">
+                            <table id="myDataTable" class="table table-striped table-bordered " width="100">
+
+                                <thead>
+                                    <tr>
+                                        <th class="smart-form center ">
+                                            <input type="checkbox" class="chkAll " />Select All
+                                        </th>
+                                        <th>Name</th>
+                                        <th>Active/Inactive</th>
+                                        <th>Remarks</th>
+                                    </tr>
+                                    <tr>
+                                        <th class="center">Actions</th>
+                                        <th>Name</th>
+                                        <th>Active/Inactive</th>
+                                        <th>Remarks</th>
+                                    </tr>
+                                </thead>
+                            </table>
+
+                        </div>
+                        <!-- end widget content -->
+
+                    </div>
+                    <!-- end widget div -->
+
+                </div>
+                <!-- end widget -->
+
+
+
+            </article>
+            <!-- WIDGET END -->
+
+        </div>
+
+        <!-- end row -->
+        <!-- end row -->
+
+    </section>
+    <!-- end widget grid -->
+
+</div>
+<!-- END MAIN CONTENT -->
+@Html.Partial("_message");
+
+
+
+
+@section pagespecific {
+
+    <script>
+        $(document).ready(function () {
+            var oTable = $('#myDataTable').dataTable({
+                "bServerSide": true,
+                "sDom": "<'dt-toolbar'<'col-xs-12 col-sm-6'l><'col-sm-6 col-xs-6 hidden-xs'C>r>" +
+                      "t" +
+                      "<'dt-toolbar-footer'<'col-sm-6 col-xs-12 hidden-xs'i><'col-sm-6 col-xs-12'p>>",
+                "sAjaxSource": "/Config/ProductColor/_index",
+
+                "bProcessing": true,
+                 "aLengthMenu": tablelength(),
+                 //"sDom": '<"top">l<"bottom"rtp><"clear">',
+                "bJqueryUI": true,
+                "bAutoWidth": false,
+                "aoColumns": [
+                                {
+                                    "sName": "Id",
+                                    "bSearchable": false,
+                                    "bSortable": false,
+                                    "sWidth": "12%",
+                                    "sClass": "center",
+                                    "fnRender": function (oObj) {
+                                        return '<label class=" checkbox state-success"><input onclick="CheckAll(this)"  name="checkbox" type="checkbox" data-Id="' + oObj.aData[0] + '"></label>&nbsp; <a title="Click on for Edit" style="text-decoration:none;" href=\"/Config/ProductColor/Edit/' + oObj.aData[0] + '\" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#EditData">Edit</a>' +
+                                        '&nbsp; <a title="Click on for Delete" style="text-decoration:none;"  data-url="/Config/ProductColor/Delete" onclick="deletedData(this, myDataTable,' + oObj.aData[0] + ');"  class="sym-btn-remove-row"></a>';
+                                    }
+                                }
+                                , { "sName": "Name", "sWidth": "30%" }
+                                , { "sName": "Active", "sWidth": "30%" }
+                                , { "sName": "Remarks", "sWidth": "25%" }
+                ]
+            });
+            oTable.columnFilter({
+                sPlaceHolder: "head:after",
+                aoColumns: [{ type: "checkbox", "sClass": "chkAll" }
+                           , { type: "text" }
+                           , { type: "select", values: ["Active", "Inactive"] }
+                           , { type: "text" }
+                           //, { type: "date-range" }
+                ]
+            });
+            SelectAllForDelete();
+        });
+
+    </script>
+}
+
+

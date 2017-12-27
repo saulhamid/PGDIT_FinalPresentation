@@ -1,0 +1,27 @@
+﻿CREATE TABLE [dbo].[ProductDetails] (
+    [Id]                  INT             NOT NULL,
+    [ProductId]           INT             NULL,
+    [UOMId]               INT             NULL,
+    [ProductBrandId]      INT             NULL,
+    [ProductCatagoriesId] INT             NULL,
+    [ProductColorId]      INT             NULL,
+    [ProductSizeId]       INT             NULL,
+    [ProductTypeId]       INT             NULL,
+    [SupplierId]          INT             NULL,
+    [Quantity]            DECIMAL (18, 2) NULL,
+    [UnitPrice]           DECIMAL (18, 2) NULL,
+    [OpenQuantity]        DECIMAL (18, 2) NULL,
+    [MinimumStock]        INT             NULL,
+    [OtherCost]           DECIMAL (18, 2) NULL,
+    [Discount]            DECIMAL (18, 2) NULL,
+    [IsActive]            BIT             NULL,
+    [IsArchive]           BIT             NULL,
+    [CreatedBy]           NVARCHAR (20)   NULL,
+    [CreatedAt]           NVARCHAR (14)   NULL,
+    [CreatedFrom]         NVARCHAR (50)   NULL,
+    [LastUpdateBy]        NVARCHAR (20)   NULL,
+    [LastUpdateAt]        NVARCHAR (14)   NULL,
+    [LastUpdateFrom]      NVARCHAR (50)   NULL,
+    CONSTRAINT [PK_ProductDetails] PRIMARY KEY CLUSTERED ([Id] ASC)
+);
+
