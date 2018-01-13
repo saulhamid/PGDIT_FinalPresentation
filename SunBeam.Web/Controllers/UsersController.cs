@@ -29,7 +29,7 @@ public ActionResult Create()
 return PartialView();
 }
 [HttpPost] 
-  public async Task<ActionResult> Create(User data)
+  public async Task<ActionResult> Create(Users data)
 { 
  string result = string.Empty; 
 try 
@@ -57,7 +57,7 @@ catch (Exception ex)
  return PartialView(data);
 }
  [HttpPost] 
-  public async Task<ActionResult> Edit(User data)
+  public async Task<ActionResult> Edit(Users data)
 { 
  string result = string.Empty; 
 try 
@@ -75,7 +75,7 @@ return Json(result,JsonRequestBehavior.AllowGet);
  {
 string result = string.Empty; 
 string[] IdList = ids.Split('~'); 
-User vm = new User(); 
+Users vm = new Users(); 
 try 
 { 
  result = await repo.IsDeleteUsers(IdList,vm); 

@@ -13,7 +13,7 @@ namespace SunBeam.Domain.Models
     using System;
     using System.Collections.Generic;
 
-    public partial class User: BaseEntity
+    public partial class Users: BaseEntity
     {
         public int Id { get; set; }
         public string FullName { get; set; }

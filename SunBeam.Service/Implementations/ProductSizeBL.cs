@@ -25,7 +25,7 @@ this.logger = logger;
 /// </summary>
 /// <param name="entity"></param>
 /// <returns>Message</returns>
-public async Task<string> InsertProductSize(ProductSize entity)
+public async Task<string> InsertProductSize(ProductSizes entity)
 {
 try
 {
@@ -44,7 +44,7 @@ throw ex;
 /// </summary>
 /// <param name="entity"></param>
 /// <returns>Message</returns>
-public async Task<string> UpdateProductSize(ProductSize entity)
+public async Task<string> UpdateProductSize(ProductSizes entity)
 {
 try
 {
@@ -63,7 +63,7 @@ throw ex;
 /// </summary>
 /// <param name="Id"></param>
 /// <returns>Message</returns>
-public async Task<string> IsDeleteProductSize(string[] IdList, ProductSize entity)
+public async Task<string> IsDeleteProductSize(string[] IdList, ProductSizes entity)
 {
 string result = string.Empty;
 try
@@ -105,7 +105,7 @@ return result;
 /// Get All ProductSize
 /// </summary>
 /// <returns>List ofProductSize</returns>
-public async Task<IEnumerable<ProductSize>> GetAllProductSize()
+public async Task<IEnumerable<ProductSizes>> GetAllProductSize()
 {
 try
 {
@@ -124,7 +124,7 @@ throw ex;
 /// </summary>
 /// <param name="Id"></param>
 /// <returns>ProductSize Object</returns>
-public async Task<ProductSize> GetProductSizeById(int Id)
+public async Task<ProductSizes> GetProductSizeById(int Id)
 {
 try
 {
@@ -143,7 +143,7 @@ throw ex;
 /// Get Id , Name ProductSize
 /// </summary>
 /// <returns>List ofProductSize</returns>
-public async Task<IEnumerable<ProductSize>> DropDownProductSize()
+public async Task<IEnumerable<ProductSizes>> DropDownProductSize()
 {
 try
 {

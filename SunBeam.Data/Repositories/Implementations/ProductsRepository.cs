@@ -192,7 +192,7 @@ namespace SunBeam.Data.Repositories.Implementations
             try
             {
                 var cmd = new SqlCommand("sp_Products");
-                cmd.Parameters.AddWithValue("@pOptions", 5);
+                cmd.Parameters.AddWithValue("@pOptions", 4);
                 var result = await GetDataReaderProc(cmd);
                 return result;
             }
@@ -211,7 +211,7 @@ namespace SunBeam.Data.Repositories.Implementations
             try
             {
                 var cmd = new SqlCommand("sp_Products");
-                cmd.Parameters.AddWithValue("@pOptions", 8);
+                cmd.Parameters.AddWithValue("@pOptions", 7);
                 var result = await GetDataReaderProc(cmd);
                 return result;
             }

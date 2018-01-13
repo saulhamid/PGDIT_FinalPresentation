@@ -13,7 +13,7 @@ namespace SunBeam.Data.Repositories.Implementations
 {
 
 
-public class ProductSizeRepository : DBGeneric<ProductSize>, IRepository<ProductSize>
+public class ProductSizeRepository : DBGeneric<ProductSizes>, IRepository<ProductSizes>
 {
 
 protected ILogger Logger { get; set; }
@@ -28,7 +28,7 @@ Logger = logger;
 /// </summary>
 /// <param name="entity"></param>
 /// <returns>Message</returns>
-public async Task<string> Insert(ProductSize entity)
+public async Task<string> Insert(ProductSizes entity)
 {
 try
 {
@@ -65,7 +65,7 @@ throw ex;
 /// </summary>
 /// <param name="entity"></param>
 /// <returns>Message</returns>
-public async Task<string> Update(ProductSize entity)
+public async Task<string> Update(ProductSizes entity)
 {
 try
 {
@@ -130,7 +130,7 @@ throw ex;
 /// </summary>
 /// <param name="Id"></param>
 /// <returns>Message</returns>
-public async Task<string> IsDelete(int Id,ProductSize entity)
+public async Task<string> IsDelete(int Id,ProductSizes entity)
 {
 try
 {
@@ -161,7 +161,7 @@ throw ex;
 /// Get All ProductSize
 /// </summary>
 /// <returns>List ofProductSize</returns>
-public async Task<IEnumerable<ProductSize>> GetAll()
+public async Task<IEnumerable<ProductSizes>> GetAll()
 {
 try
 {
@@ -182,7 +182,7 @@ throw ex;
 /// </summary>
 /// <param name="Id"></param>
 /// <returns>ProductSize Object</returns>
-public async Task<ProductSize> GetById(int Id)
+public async Task<ProductSizes> GetById(int Id)
 {
 try
 {
@@ -204,11 +204,11 @@ throw ex;
 /// </summary>
 /// <param name="sqldatareader"></param>
 /// <returns>ProductSize Object</returns>
-public ProductSize Mapping(SqlDataReader reader)
+public ProductSizes Mapping(SqlDataReader reader)
 {
 try
 {
-ProductSize oProductSize = new ProductSize();
+ProductSizes oProductSize = new ProductSizes();
 oProductSize.Id = Helper.ColumnExists(reader, "Id") ? ((reader["Id"] == DBNull.Value) ? 0 : Convert.ToInt32(reader["Id"])) : 0 ;
 oProductSize.Code = Helper.ColumnExists(reader, "Code") ? reader["Code"].ToString() : "";
 oProductSize.Name = Helper.ColumnExists(reader, "Name") ? reader["Name"].ToString() : "";
@@ -234,7 +234,7 @@ throw ex;
 /// Get Id, Name ProductSize
 /// </summary>
 /// <returns>List ofProductSize</returns>
-public async Task<IEnumerable<ProductSize>> Dropdown()
+public async Task<IEnumerable<ProductSizes>> Dropdown()
 {
 try
 {

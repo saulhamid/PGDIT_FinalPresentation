@@ -3,21 +3,20 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 
-alter  proc [dbo].[sp_Stocks]
+CREATE  proc [dbo].[sp_Stocks]
 (
 @Id		int = null,
 @ProductId		int = null,
-@TotalReplace		decimal = null,
-@TotalReturn		decimal = null,
-@TotalDiscount		decimal = null,
-@TotalSlup		decimal = null,
-@StockQuantity		decimal = null,
-@TotalQuantity		decimal = null,
+@Replace		decimal = null,
+@Return		decimal = null,
+@Discount		decimal = null,
+@Slup		decimal = null,
+@Quantity		decimal = null,
 @TotalPaid		decimal = null,
 @TotalPrice		decimal = null,
 @GrandTotal		decimal = null,
 @Date		nvarchar(50) = null,
-@FinalUnitPrice		decimal = null,
+@UnitPrice		decimal = null,
 @OpeningQuantity		decimal = null,
 @Remarks		nvarchar(500) = null,
 @StockStutes		bit = null,
@@ -40,17 +39,16 @@ begin
 INSERT INTO Stocks
 (
 ProductId,
-TotalReplace,
-TotalReturn,
-TotalDiscount,
-TotalSlup,
-StockQuantity,
-TotalQuantity,
+[Replace],
+[Return],
+Discount,
+Slup,
+Quantity,
 TotalPaid,
 TotalPrice,
 GrandTotal,
 Date,
-FinalUnitPrice,
+UnitPrice,
 OpeningQuantity,
 Remarks,
 StockStutes,
@@ -58,23 +56,25 @@ IsActive,
 IsArchive,
 CreatedBy,
 CreatedAt,
-CreatedFrom
+CreatedFrom,
+LastUpdateBy,
+LastUpdateAt,
+LastUpdateFrom
 
 )
 VALUES
 (	
 @ProductId,
-@TotalReplace,
-@TotalReturn,
-@TotalDiscount,
-@TotalSlup,
-@StockQuantity,
-@TotalQuantity,
+@Replace,
+@Return,
+@Discount,
+@Slup,
+@Quantity,
 @TotalPaid,
 @TotalPrice,
 @GrandTotal,
 @Date,
-@FinalUnitPrice,
+@UnitPrice,
 @OpeningQuantity,
 @Remarks,
 @StockStutes,
@@ -82,7 +82,10 @@ VALUES
 @IsArchive,
 @CreatedBy,
 @CreatedAt,
-@CreatedFrom
+@CreatedFrom,
+@LastUpdateBy,
+@LastUpdateAt,
+@LastUpdateFrom
 
 )
 IF @@ROWCOUNT = 0
@@ -105,22 +108,24 @@ UPDATE	Stocks
 SET
 Id	=	@Id ,
 ProductId	=	@ProductId ,
-TotalReplace	=	@TotalReplace ,
-TotalReturn	=	@TotalReturn ,
-TotalDiscount	=	@TotalDiscount ,
-TotalSlup	=	@TotalSlup ,
-StockQuantity	=	@StockQuantity ,
-TotalQuantity	=	@TotalQuantity ,
+Replace	=	@Replace ,
+Return	=	@Return ,
+Discount	=	@Discount ,
+Slup	=	@Slup ,
+Quantity	=	@Quantity ,
 TotalPaid	=	@TotalPaid ,
 TotalPrice	=	@TotalPrice ,
 GrandTotal	=	@GrandTotal ,
 Date	=	@Date ,
-FinalUnitPrice	=	@FinalUnitPrice ,
+UnitPrice	=	@UnitPrice ,
 OpeningQuantity	=	@OpeningQuantity ,
 Remarks	=	@Remarks ,
 StockStutes	=	@StockStutes ,
 IsActive	=	@IsActive ,
 IsArchive	=	@IsArchive ,
+CreatedBy	=	@CreatedBy ,
+CreatedAt	=	@CreatedAt ,
+CreatedFrom	=	@CreatedFrom ,
 LastUpdateBy	=	@LastUpdateBy ,
 LastUpdateAt	=	@LastUpdateAt ,
 LastUpdateFrom	=	@LastUpdateFrom 
@@ -220,7 +225,7 @@ end
 
 if(@pOptions=7)
 begin	        
-select Id  from Stocks Where IsActive=1 and IsArchive=0;;
+select Id,Name  from Stocks Where IsActive=1 and IsArchive=0;;
 if(@@ROWCOUNT=0)
 SET @Msg='Data Not Found';
 end

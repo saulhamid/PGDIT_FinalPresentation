@@ -34,7 +34,7 @@ namespace SunBeam.Web.Areas.Config.Controllers
 
             #endregion Column Search
             var getAllData = repo.GetAllProductSize().Result;
-            IEnumerable<ProductSize> filteredData;
+            IEnumerable<ProductSizes> filteredData;
 
             if (!string.IsNullOrEmpty(param.sSearch))
             {
@@ -69,7 +69,7 @@ namespace SunBeam.Web.Areas.Config.Controllers
             var isSortable_1 = Convert.ToBoolean(Request["bSortable_1"]);
             var isSortable_2 = Convert.ToBoolean(Request["bSortable_2"]);
             var sortColumnIndex = Convert.ToInt32(Request["iSortCol_0"]);
-            Func<ProductSize, string> orderingFunction = (c => sortColumnIndex == 1 && isSortable_1 ? c.Name :
+            Func<ProductSizes, string> orderingFunction = (c => sortColumnIndex == 1 && isSortable_1 ? c.Name :
                                                            sortColumnIndex == 2 && isSortable_2 ? c.Remarks :
                                                            "");
 
@@ -102,7 +102,7 @@ namespace SunBeam.Web.Areas.Config.Controllers
             return PartialView();
         }
         [HttpPost]
-        public async Task<ActionResult> Create(ProductSize data)
+        public async Task<ActionResult> Create(ProductSizes data)
         {
             string result = string.Empty;
             try
@@ -130,7 +130,7 @@ namespace SunBeam.Web.Areas.Config.Controllers
             return PartialView(data);
         }
         [HttpPost]
-        public async Task<ActionResult> Edit(ProductSize data)
+        public async Task<ActionResult> Edit(ProductSizes data)
         {
             string result = string.Empty;
             try
@@ -148,7 +148,7 @@ namespace SunBeam.Web.Areas.Config.Controllers
         {
             string result = string.Empty;
             string[] IdList = ids.Split('~');
-            ProductSize vm = new ProductSize();
+            ProductSizes vm = new ProductSizes();
             try
             {
                 result = await repo.IsDeleteProductSize(IdList, vm);

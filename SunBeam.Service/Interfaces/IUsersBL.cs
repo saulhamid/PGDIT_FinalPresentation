@@ -6,12 +6,12 @@ namespace SunBeam.Service.Interfaces
 {
 public interface IUsersBL
 {
-Task<string> InsertUsers(User entity);
-Task<string> UpdateUsers(User entity);
-Task<string> IsDeleteUsers(string[] IdList,User entity);
+Task<string> InsertUsers(Users entity);
+Task<string> UpdateUsers(Users entity);
+Task<string> IsDeleteUsers(string[] IdList,Users entity);
 Task<string> DeleteUsers(int Id);
-Task<IEnumerable<User>> GetAllUsers();
-Task<User> GetUsersById(int Id);
-Task<IEnumerable<User>> DropDownUsers();
+Task<IEnumerable<Users>> GetAllUsers();
+Task<Users> GetUsersById(int Id);
+Task<IEnumerable<Users>> DropDownUsers();
   }
 }

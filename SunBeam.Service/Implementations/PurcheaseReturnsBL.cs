@@ -4,159 +4,226 @@ using SunBeam.Domain.Models;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-
+using System.Transactions;
+using System.Linq;
+using SunBeam.Domain.ViewModel;
 
 namespace SunBeam.Service.Interfaces
 {
 
 
-public class PurcheaseReturnsBL : IPurcheaseReturnsBL
-{
+    public class PurcheaseReturnsBL : IPurchasesBL
+    {
+        protected ILogger logger { get; set; }
+        public PurcheaseReturnsBL(ILogger logger)
+        {
+            this.logger = logger;
+        }
+        /// <summary>
+        /// Insert Purchases
+        /// </summary>
+        /// <param name="entity"></param>
+        /// <returns>Message</returns>
+        public async Task<string> InsertPurchases(Purchases entity)
+        {
+                var result = string.Empty;
+            StockVM stockdata = new StockVM();
+            using (TransactionScope txScope = new TransactionScope())
+                {
+                try
+                {
+                    foreach (var data in entity.PurcheaseDetails)
+                    {
+                        data.ProReturn = true;
+                        result = await new PurcheaseDetailsRepository(logger).Update(data);
+                         stockdata = new StocksRepository(logger).GetAll().Result.FirstOrDefault(c => c.ProductId==data.ProductId);
+                        if (stockdata != null)
+                        {
+                            stockdata.Quantity = decimal.Subtract(stockdata.Quantity, data.Quantity);
+                            result = await new StocksRepository(logger).Update(stockdata);
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    logger.Error(ex.Message);
+                    result = "Fail~" + ex.Message.ToString();
+                    throw ex;
+                }
+                finally {
+                    txScope.Complete();
+                    txScope.Dispose();
+                }
+            }
+                return result;
+        }
 
-protected ILogger logger { get; set; }
+        /// <summary>
+        /// Update Purchases
+        /// </summary>
+        /// <param name="entity"></param>
+        /// <returns>Message</returns>
+        public async Task<string> UpdatePurchases(Purchases entity)
+        {
+            var result = string.Empty;
+            try
+            {
+                using (TransactionScope txScope = new TransactionScope())
+                {
+                    //Insert in Purchease
+                    var purd = new PurcheaseDetailsRepository(logger).GetAll().Result.Where(c => c.PurchaseId.Equals(entity.Id));
+                    //Delete in PurcheaseDetail
+                    foreach (var data in purd) {
 
-public PurcheaseReturnsBL(ILogger logger)
-{
-this.logger = logger;
-}
+                        var stockdata = new StocksRepository(logger).GetAll().Result.FirstOrDefault(c=>c.ProductId.Equals(data.ProductId));
+                        if (stockdata != null)
+                        {
+                            stockdata.Quantity = decimal.Add(stockdata.Quantity, data.Quantity);
+                            result = await new StocksRepository(logger).Update(stockdata);
+                        }
+                        result = await new PurcheaseDetailsRepository(logger).Delete(data.Id);
+                    }
+                    foreach (PurcheaseDetails datas  in entity.PurcheaseDetails.ToList())
+                    {
+                        var stockdata = new StocksRepository(logger).GetAll().Result.FirstOrDefault(c => c.ProductId.Equals(datas.ProductId));
+                        if (stockdata != null)
+                        {
+                            if (stockdata.Quantity < datas.Quantity)
+                            {
+                               var Quantity =decimal.Add(stockdata.Quantity, datas.Quantity);
+                                stockdata.Quantity = Quantity;
+                            }
+                            else if (stockdata.Quantity > datas.Quantity)
+                            {
+                                stockdata.Quantity = decimal.Subtract(stockdata.Quantity, datas.Quantity);
+                            }
+                            stockdata.UnitPrice = datas.UnitePrice;
+                            result = await new StocksRepository(logger).Update(stockdata);
+                        }
+                        else {
+                            StockVM svm = new StockVM { ProductId = datas.ProductId, UnitPrice = datas.UnitePrice, Quantity = datas.Quantity };
+                            result = await new StocksRepository(logger).Insert(svm);
+                        }
+                        datas.PurchaseId = entity.Id;
+                        result = await new PurcheaseDetailsRepository(logger).Insert(datas);
+                    }
+                    txScope.Complete();
+                }
+                return result;
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex.Message);
+                throw ex;
+            }
+        }
 
-/// <summary>
-/// Insert PurcheaseReturns
-/// </summary>
-/// <param name="entity"></param>
-/// <returns>Message</returns>
-public async Task<string> InsertPurcheaseReturns(PurcheaseReturns entity)
-{
-try
-{
-var result = await new PurcheaseReturnsRepository(logger).Insert(entity);
-return result;
-}
-catch (Exception ex)
-{
-logger.Error(ex.Message);
-throw ex;
-}
-}
+        /// <summary>
+        /// Delete Purchases
+        /// </summary>
+        /// <param name="Id"></param>
+        /// <returns>Message</returns>
+        public async Task<string> IsDeletePurchases(string[] IdList, Purchases entity)
+        {
+            string result = string.Empty;
+            try
+            {
+                for (int i = 0; i < IdList.Length - 1; i++)
+                {
+                    result = await new PurchasesRepository(logger).IsDelete(Convert.ToInt32(IdList[i]), entity);
+                }
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex.Message);
+                throw ex;
+            }
+            return result;
+        }
 
-/// <summary>
-/// Update PurcheaseReturns
-/// </summary>
-/// <param name="entity"></param>
-/// <returns>Message</returns>
-public async Task<string> UpdatePurcheaseReturns(PurcheaseReturns entity)
-{
-try
-{
-var result = await new PurcheaseReturnsRepository(logger).Update(entity);
-return result;
-}
-catch (Exception ex)
-{
-logger.Error(ex.Message);
-throw ex;
-}
-}
+        /// <summary>
+        /// Delete Purchases
+        /// </summary>
+        /// <param name="Id"></param>
+        /// <returns>Message</returns>
+        public async Task<string> DeletePurchases(int Id)
+        {
+            string result = string.Empty;
+            try
+            {
+                result = await new PurchasesRepository(logger).Delete(Id);
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex.Message);
+                throw ex;
+            }
+            return result;
+        }
 
-/// <summary>
-/// Delete PurcheaseReturns
-/// </summary>
-/// <param name="Id"></param>
-/// <returns>Message</returns>
-public async Task<string> IsDeletePurcheaseReturns(string[] IdList, PurcheaseReturns entity)
-{
-string result = string.Empty;
-try
-{
- for (int i = 0; i < IdList.Length - 1; i++)
-{
-result = await new PurcheaseReturnsRepository(logger).IsDelete(Convert.ToInt32(IdList[i]), entity);
-}
-}
-catch (Exception ex)
-{
-logger.Error(ex.Message);
-throw ex;
-}
-return result;
-}
+        /// <summary>
+        /// Get All Purchases
+        /// </summary>
+        /// <returns>List ofPurchases</returns>
+        public async Task<IEnumerable<Purchases>> GetAllPurchases()
+        {
+            dynamic result=null;
+            try
+            {
+                 result = await new PurchasesRepository(logger).GetAll();
 
-/// <summary>
-/// Delete PurcheaseReturns
-/// </summary>
-/// <param name="Id"></param>
-/// <returns>Message</returns>
-public async Task<string> DeletePurcheaseReturns(int Id)
-{
-string result = string.Empty;
-try
-{
-result = await new PurcheaseReturnsRepository(logger).Delete(Id);
-}
-catch (Exception ex)
-{
-logger.Error(ex.Message);
-throw ex;
-}
-return result;
-}
+                return result;
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex.Message);
+                throw ex;
+            }
+        }
 
-/// <summary>
-/// Get All PurcheaseReturns
-/// </summary>
-/// <returns>List ofPurcheaseReturns</returns>
-public async Task<IEnumerable<PurcheaseReturns>> GetAllPurcheaseReturns()
-{
-try
-{
-var result = await new PurcheaseReturnsRepository(logger).GetAll();
-return result;
-}
-catch (Exception ex)
-{
-logger.Error(ex.Message);
-throw ex;
-}
-}
-
-/// <summary>
-/// Get PurcheaseReturns by Id
-/// </summary>
-/// <param name="Id"></param>
-/// <returns>PurcheaseReturns Object</returns>
-public async Task<PurcheaseReturns> GetPurcheaseReturnsById(int Id)
-{
-try
-{
-var result = await new PurcheaseReturnsRepository(logger).GetById(Id);
-return result;
-}
-catch (Exception ex)
-{
-logger.Error(ex.Message);
-throw ex;
-}
-}
-
-
-/// <summary>
-/// Get Id , Name PurcheaseReturns
-/// </summary>
-/// <returns>List ofPurcheaseReturns</returns>
-public async Task<IEnumerable<PurcheaseReturns>> DropDownPurcheaseReturns()
-{
-try
-{
-var result = await new PurcheaseReturnsRepository(logger).Dropdown();
-return result;
-}
-catch (Exception ex)
-{
-logger.Error(ex.Message);
-throw ex;
-}
-}
-}
+        /// <summary>
+        /// Get Purchases by Id
+        /// </summary>
+        /// <param name="Id"></param>
+        /// <returns>Purchases Object</returns>
+        public async Task<Purchases> GetPurchasesById(int Id)
+        {
+            Purchases result = null;
+            try
+            {
+                using (TransactionScope txScope = new TransactionScope())
+                {
+                    result = await new PurchasesRepository(logger).GetById(Id);
+                    result.PurcheaseDetails = new PurcheaseDetailsRepository(logger).GetAll().Result.Where(c => c.PurchaseId.Equals(Id));
+                    txScope.Complete();
+                    txScope.Dispose();
+                };
+                return result;
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex.Message);
+                throw ex;
+            }
+        }
 
 
+        /// <summary>
+        /// Get Id , Name Purchases
+        /// </summary>
+        /// <returns>List ofPurchases</returns>
+        public async Task<IEnumerable<Purchases>> DropDownPurchases()
+        {
+            try
+            {
+                var result = await new PurchasesRepository(logger).Dropdown();
+                return result;
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex.Message);
+                throw ex;
+            }
+        }
+    }
 }

@@ -10,11 +10,11 @@ using System.Web.Mvc;
 
 namespace SunBeam.Web.Areas.CRM.Controllers
 {
-    public class PurcheaseReturnController : Controller
+    public class xxPurcheaseReturnController : Controller
     {
         private readonly IPurcheaseDetailsBL repoPur;
         private readonly IPurcheaseReturnsBL repo;
-        public PurcheaseReturnController(IPurcheaseReturnsBL _repo, IPurcheaseDetailsBL _repoPur)
+        public xxPurcheaseReturnController(IPurcheaseReturnsBL _repo, IPurcheaseDetailsBL _repoPur)
         {
             this.repo = _repo;
             this.repoPur = _repoPur;
@@ -159,7 +159,7 @@ namespace SunBeam.Web.Areas.CRM.Controllers
             PurcheaseReturnDetails PurcheaseReturnDetails = new PurcheaseReturnDetails();
             try
             {
-               var data = repoPur.GetAllPurcheaseDetails().Result.FirstOrDefault(c => c.Id.Equals(proid));
+               var data = repoPur.GetAllPurcheaseDetails().Result.FirstOrDefault(c => c.ProductId.Equals(proid));
                 PurcheaseReturnDetails.Quantity = Convert.ToDecimal(quantity);
                 PurcheaseReturnDetails.ProductId = proid;
                 PurcheaseReturnDetails.UnitePrice = data.UnitePrice;

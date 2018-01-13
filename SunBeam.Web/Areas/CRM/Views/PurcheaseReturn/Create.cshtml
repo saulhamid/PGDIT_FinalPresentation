@@ -1,6 +1,6 @@
 ﻿@model SunBeam.Domain.Models.PurcheaseReturns
 <!-- Modal -->
-@using (Html.BeginForm("Create", "PurcheaseReturns", FormMethod.Post, new { @Id = "frmPurcheaseReturns", @Name = "frmPurcheaseReturns" }))
+@using (Html.BeginForm("Create", "PurcheaseReturn", FormMethod.Post, new { @Id = "frmPurcheaseReturns", @Name = "frmPurcheaseReturns" }))
 {
     <div id="content">
         <p class="alert alert-info">
@@ -46,9 +46,7 @@
                                                 <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
                                             </div>
                                         </div>
-
                                     </div>
-                                 
                                     <div class="col-md-3">
                                         <label for="Employee">Employee</label>
                                         <div class="form-group">
@@ -64,7 +62,6 @@
                                         </div>
                                     </div>
                                 </div>
-
                             </div>
                             <!-- end widget content -->
                         </div>
@@ -233,8 +230,8 @@
                         $('tbody').append(response);
                 calculation();
             },
-                    error: function () {
-                ShowAlert("Fail", "Operation Fail");
+                    error: function (arr) {
+                        ShowAlert("Fail", "Operation Fail " + arr );
             }
         });
 
@@ -316,7 +313,6 @@ $("select.InvoiceNo").change(function () {
                 }
                 else {
                     Listitems += "<option value='" + item.Value + "'>" + item.Text + "</option>";
-
                 }
             });
             $("select.ProductName").html(Listitems).change();

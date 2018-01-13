@@ -18,6 +18,14 @@ namespace SunBeam.Web
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+            
+        }
+        public class FilterConfig
+        {
+            public static void RegisterGlobalFilters(GlobalFilterCollection filters)
+            {
+                //filters.Add(new System.Web.Http.AuthorizeAttribute());
+            }
         }
     }
 }

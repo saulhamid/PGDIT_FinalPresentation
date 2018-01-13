@@ -6,12 +6,12 @@ namespace SunBeam.Service.Interfaces
 {
 public interface IProductSizeBL
 {
-Task<string> InsertProductSize(ProductSize entity);
-Task<string> UpdateProductSize(ProductSize entity);
-Task<string> IsDeleteProductSize(string[] IdList,ProductSize entity);
+Task<string> InsertProductSize(ProductSizes entity);
+Task<string> UpdateProductSize(ProductSizes entity);
+Task<string> IsDeleteProductSize(string[] IdList,ProductSizes entity);
 Task<string> DeleteProductSize(int Id);
-Task<IEnumerable<ProductSize>> GetAllProductSize();
-Task<ProductSize> GetProductSizeById(int Id);
-Task<IEnumerable<ProductSize>> DropDownProductSize();
+Task<IEnumerable<ProductSizes>> GetAllProductSize();
+Task<ProductSizes> GetProductSizeById(int Id);
+Task<IEnumerable<ProductSizes>> DropDownProductSize();
   }
 }

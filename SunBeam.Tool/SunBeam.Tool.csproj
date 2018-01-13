@@ -76,16 +76,6 @@
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\SunBeam.Common\SunBeam.Common.csproj">
-      <Project>{1E714151-0B9F-4A79-AD19-828BFD3D1DA8}</Project>
-      <Name>SunBeam.Common</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\SunBeam.Service\SunBeam.Service.csproj">
-      <Project>{81A5DC2B-132B-4610-90E3-2B614E4B0E69}</Project>
-      <Name>SunBeam.Service</Name>
-    </ProjectReference>
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

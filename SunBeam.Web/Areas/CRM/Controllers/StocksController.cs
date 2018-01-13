@@ -1,5 +1,6 @@
 #region Library
 using SunBeam.Domain.Models;
+using SunBeam.Domain.ViewModel;
 using SunBeam.Service.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -36,7 +37,7 @@ namespace SunBeam.Web.Areas.CRM.Controllers
 
             #endregion Column Search
             var getAllData = repo.GetAllStocks().Result;
-            IEnumerable<Stocks> filteredData;
+            IEnumerable<StockVM> filteredData;
 
             if (!string.IsNullOrEmpty(param.sSearch))
             {
@@ -76,9 +77,9 @@ namespace SunBeam.Web.Areas.CRM.Controllers
             var isSortable_3 = Convert.ToBoolean(Request["bSortable_3"]);
             var isSortable_4 = Convert.ToBoolean(Request["bSortable_4"]);
             var sortColumnIndex = Convert.ToInt32(Request["iSortCol_0"]);
-            Func<Stocks, string> orderingFunction = (c => sortColumnIndex == 1 && isSortable_1 ? c.ProductName :
+            Func<StockVM, string> orderingFunction = (c => sortColumnIndex == 1 && isSortable_1 ? c.ProductName :
                                                            sortColumnIndex == 2 && isSortable_2 ? c.Date :
-                                                           sortColumnIndex == 3 && isSortable_3 ? c.FinalUnitPrice.ToString() :
+                                                           sortColumnIndex == 3 && isSortable_3 ? c.UnitPrice.ToString() :
                                                            sortColumnIndex == 4 && isSortable_4 ? c.Quantity.ToString() :
                                                            "");
 
@@ -91,12 +92,13 @@ namespace SunBeam.Web.Areas.CRM.Controllers
             var displayedCompanies = filteredData.Skip(param.iDisplayStart).Take(param.iDisplayLength);
             var result = from c in displayedCompanies
                          select new[] {
-                           
+
                               c.ProductName
                              , c.Date.ToString()
-                             , c.FinalUnitPrice.ToString()
+                             , c.UnitPrice.ToString()
                              , c.Quantity.ToString()
-                             , (c.FinalUnitPrice*c.Quantity).ToString()
+                             ,String.Format("{0:0.00}",c.UnitPrice*c.Quantity)
+                             
                          };
             return Json(new
             {
@@ -113,7 +115,7 @@ namespace SunBeam.Web.Areas.CRM.Controllers
             return PartialView();
         }
         [HttpPost]
-        public async Task<ActionResult> Create(Stocks data)
+        public async Task<ActionResult> Create(StockVM data)
         {
             string result = string.Empty;
             try
@@ -141,7 +143,7 @@ namespace SunBeam.Web.Areas.CRM.Controllers
             return PartialView(data);
         }
         [HttpPost]
-        public async Task<ActionResult> Edit(Stocks data)
+        public async Task<ActionResult> Edit(StockVM data)
         {
             string result = string.Empty;
             try
@@ -159,7 +161,7 @@ namespace SunBeam.Web.Areas.CRM.Controllers
         {
             string result = string.Empty;
             string[] IdList = ids.Split('~');
-            Stocks vm = new Stocks();
+            StockVM vm = new StockVM();
             try
             {
                 result = await repo.IsDeleteStocks(IdList, vm);

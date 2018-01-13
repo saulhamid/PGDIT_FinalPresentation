@@ -178,7 +178,7 @@ namespace SunBeam.Data.Repositories.Implementations
             try
             {
                 var cmd = new SqlCommand("sp_PurcheaseDetails");
-                cmd.Parameters.AddWithValue("@pOptions", 5);
+                cmd.Parameters.AddWithValue("@pOptions", 8);
                 var result = await GetDataReaderProc(cmd);
                 return result;
             }
@@ -240,8 +240,8 @@ namespace SunBeam.Data.Repositories.Implementations
                 oPurcheaseDetails.LastUpdateBy = Helper.ColumnExists(reader, "LastUpdateBy") ? reader["LastUpdateBy"].ToString() : "";
                 oPurcheaseDetails.LastUpdateAt = Helper.ColumnExists(reader, "LastUpdateAt") ? reader["LastUpdateAt"].ToString() : "";
                 oPurcheaseDetails.LastUpdateFrom = Helper.ColumnExists(reader, "LastUpdateFrom") ? reader["LastUpdateFrom"].ToString() : "";
-                oPurcheaseDetails.ProductName = Helper.ColumnExists(reader, "ProductName") ? reader["ProductName"].ToString() : "";
-                oPurcheaseDetails.ProductCode = Helper.ColumnExists(reader, "ProductCode") ? reader["ProductCode"].ToString() : "";
+                //oPurcheaseDetails.ProductName = Helper.ColumnExists(reader, "ProductName") ? reader["ProductName"].ToString() : "";
+                //oPurcheaseDetails.ProductCode = Helper.ColumnExists(reader, "ProductCode") ? reader["ProductCode"].ToString() : "";
                 return oPurcheaseDetails;
             }
             catch (Exception ex)

@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Transactions;
 using System.Linq;
+using SunBeam.Domain.ViewModel;
 
 namespace SunBeam.Service.Interfaces
 {
@@ -23,7 +24,7 @@ namespace SunBeam.Service.Interfaces
         /// </summary>
         /// <param name="entity"></param>
         /// <returns>Message</returns>
-        public async Task<string> InsertStocks(Stocks entity)
+        public async Task<string> InsertStocks(StockVM entity)
         {
             var result = string.Empty;
             try
@@ -55,7 +56,7 @@ namespace SunBeam.Service.Interfaces
         /// </summary>
         /// <param name="entity"></param>
         /// <returns>Message</returns>
-        public async Task<string> UpdateStocks(Stocks entity)
+        public async Task<string> UpdateStocks(StockVM entity)
         {
             try
             {
@@ -74,7 +75,7 @@ namespace SunBeam.Service.Interfaces
         /// </summary>
         /// <param name="Id"></param>
         /// <returns>Message</returns>
-        public async Task<string> IsDeleteStocks(string[] IdList, Stocks entity)
+        public async Task<string> IsDeleteStocks(string[] IdList, StockVM entity)
         {
             string result = string.Empty;
             try
@@ -116,7 +117,7 @@ namespace SunBeam.Service.Interfaces
         /// Get All Stocks
         /// </summary>
         /// <returns>List ofStocks</returns>
-        public async Task<IEnumerable<Stocks>> GetAllStocks()
+        public async Task<IEnumerable<StockVM>> GetAllStocks()
         {
             try
             {
@@ -134,7 +135,7 @@ namespace SunBeam.Service.Interfaces
         /// </summary>
         /// <param name="Id"></param>
         /// <returns>Stocks Object</returns>
-        public async Task<Stocks> GetStocksById(int Id)
+        public async Task<StockVM> GetStocksById(int Id)
         {
             try
             {
@@ -151,7 +152,7 @@ namespace SunBeam.Service.Interfaces
         /// Get Id , Name Stocks
         /// </summary>
         /// <returns>List ofStocks</returns>
-        public async Task<IEnumerable<Stocks>> DropDownStocks()
+        public async Task<IEnumerable<StockVM>> DropDownStocks()
         {
             try
             {

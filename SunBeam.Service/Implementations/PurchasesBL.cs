@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Transactions;
 using System.Linq;
+using SunBeam.Domain.ViewModel;
 
 namespace SunBeam.Service.Interfaces
 {
@@ -26,7 +27,8 @@ namespace SunBeam.Service.Interfaces
         public async Task<string> InsertPurchases(Purchases entity)
         {
                 var result = string.Empty;
-                using (TransactionScope txScope = new TransactionScope())
+            StockVM stockdata = new StockVM();
+            using (TransactionScope txScope = new TransactionScope())
                 {
                 try
                 {
@@ -47,7 +49,7 @@ namespace SunBeam.Service.Interfaces
                     {
                         data.PurchaseId = pudid;
                         result = await new PurcheaseDetailsRepository(logger).Insert(data);
-                        var stockdata = new StocksRepository(logger).GetAll().Result.FirstOrDefault(c => c.ProductId.Equals(data.ProductId));
+                         stockdata = new StocksRepository(logger).GetAll().Result.FirstOrDefault(c => c.ProductId==data.ProductId);
                         if (stockdata != null)
                         {
                             if (stockdata.Quantity < data.Quantity)
@@ -58,12 +60,12 @@ namespace SunBeam.Service.Interfaces
                             {
                                 stockdata.Quantity = decimal.Subtract(stockdata.Quantity, data.Quantity);
                             }
-                            stockdata.FinalUnitPrice = data.UnitePrice;
+                            stockdata.UnitPrice = data.UnitePrice;
                             result = await new StocksRepository(logger).Update(stockdata);
                         }
                         else
                         {
-                            Stocks svm = new Stocks { ProductId = data.ProductId, FinalUnitPrice = data.UnitePrice, Quantity = data.Quantity };
+                            StockVM svm = new StockVM { ProductId = data.ProductId,UnitPrice = data.UnitePrice, Quantity = data.Quantity };
                             result = await new StocksRepository(logger).Insert(svm);
                         }
                     }
@@ -76,6 +78,7 @@ namespace SunBeam.Service.Interfaces
                 }
                 finally {
                     txScope.Complete();
+                    txScope.Dispose();
                 }
             }
                 return result;
@@ -120,11 +123,11 @@ namespace SunBeam.Service.Interfaces
                             {
                                 stockdata.Quantity = decimal.Subtract(stockdata.Quantity, datas.Quantity);
                             }
-                            stockdata.FinalUnitPrice = datas.UnitePrice;
+                            stockdata.UnitPrice = datas.UnitePrice;
                             result = await new StocksRepository(logger).Update(stockdata);
                         }
                         else {
-                            Stocks svm = new Stocks { ProductId = datas.ProductId, FinalUnitPrice = datas.UnitePrice, Quantity = datas.Quantity };
+                            StockVM svm = new StockVM { ProductId = datas.ProductId, UnitPrice = datas.UnitePrice, Quantity = datas.Quantity };
                             result = await new StocksRepository(logger).Insert(svm);
                         }
                         datas.PurchaseId = entity.Id;

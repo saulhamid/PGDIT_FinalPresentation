@@ -38,16 +38,19 @@ cmd.Parameters.AddWithValue("@InvoiecNo", entity.InvoiecNo);
 cmd.Parameters.AddWithValue("@SupplierId", entity.SupplierId);
 cmd.Parameters.AddWithValue("@EmployeeId", entity.EmployeeId);
 cmd.Parameters.AddWithValue("@Date", entity.Date);
-cmd.Parameters.AddWithValue("@Discount", entity.Discount);
 cmd.Parameters.AddWithValue("@CouponName", entity.CouponName);
 cmd.Parameters.AddWithValue("@CouponAmunt", entity.CouponAmunt);
+cmd.Parameters.AddWithValue("@Discount", entity.Discount);
 cmd.Parameters.AddWithValue("@Remarks", entity.Remarks);
+cmd.Parameters.AddWithValue("@PurcheaseReturn", entity.PurcheaseReturn);
 cmd.Parameters.AddWithValue("@IsActive", entity.IsActive);
 cmd.Parameters.AddWithValue("@IsArchive", entity.IsArchive);
 cmd.Parameters.AddWithValue("@CreatedBy", entity.CreatedBy);
 cmd.Parameters.AddWithValue("@CreatedAt", entity.CreatedAt);
 cmd.Parameters.AddWithValue("@CreatedFrom", entity.CreatedFrom);
-
+cmd.Parameters.AddWithValue("@LastUpdateBy", entity.LastUpdateBy);
+cmd.Parameters.AddWithValue("@LastUpdateAt", entity.LastUpdateAt);
+cmd.Parameters.AddWithValue("@LastUpdateFrom", entity.LastUpdateFrom);
 
 cmd.Parameters.Add("@Msg", SqlDbType.NChar, 500);
 cmd.Parameters["@Msg"].Direction = ParameterDirection.Output;
@@ -78,12 +81,16 @@ cmd.Parameters.AddWithValue("@InvoiecNo", entity.InvoiecNo);
 cmd.Parameters.AddWithValue("@SupplierId", entity.SupplierId);
 cmd.Parameters.AddWithValue("@EmployeeId", entity.EmployeeId);
 cmd.Parameters.AddWithValue("@Date", entity.Date);
-cmd.Parameters.AddWithValue("@Discount", entity.Discount);
 cmd.Parameters.AddWithValue("@CouponName", entity.CouponName);
 cmd.Parameters.AddWithValue("@CouponAmunt", entity.CouponAmunt);
+cmd.Parameters.AddWithValue("@Discount", entity.Discount);
 cmd.Parameters.AddWithValue("@Remarks", entity.Remarks);
+cmd.Parameters.AddWithValue("@PurcheaseReturn", entity.PurcheaseReturn);
 cmd.Parameters.AddWithValue("@IsActive", entity.IsActive);
 cmd.Parameters.AddWithValue("@IsArchive", entity.IsArchive);
+cmd.Parameters.AddWithValue("@CreatedBy", entity.CreatedBy);
+cmd.Parameters.AddWithValue("@CreatedAt", entity.CreatedAt);
+cmd.Parameters.AddWithValue("@CreatedFrom", entity.CreatedFrom);
 cmd.Parameters.AddWithValue("@LastUpdateBy", entity.LastUpdateBy);
 cmd.Parameters.AddWithValue("@LastUpdateAt", entity.LastUpdateAt);
 cmd.Parameters.AddWithValue("@LastUpdateFrom", entity.LastUpdateFrom);
@@ -219,10 +226,11 @@ oPurchases.InvoiecNo = Helper.ColumnExists(reader, "InvoiecNo") ? reader["Invoie
 oPurchases.SupplierId = Helper.ColumnExists(reader, "SupplierId") ? ((reader["SupplierId"] == DBNull.Value) ? 0 : Convert.ToInt32(reader["SupplierId"])) : 0 ;
 oPurchases.EmployeeId = Helper.ColumnExists(reader, "EmployeeId") ? ((reader["EmployeeId"] == DBNull.Value) ? 0 : Convert.ToInt32(reader["EmployeeId"])) : 0 ;
 oPurchases.Date = Helper.ColumnExists(reader, "Date") ? reader["Date"].ToString() : "";
-oPurchases.Discount = Helper.ColumnExists(reader, "Discount") ? ((reader["Discount"] == DBNull.Value) ? 0 : Convert.ToDecimal(reader["Discount"])) : 0;
 oPurchases.CouponName = Helper.ColumnExists(reader, "CouponName") ? reader["CouponName"].ToString() : "";
 oPurchases.CouponAmunt = Helper.ColumnExists(reader, "CouponAmunt") ? ((reader["CouponAmunt"] == DBNull.Value) ? 0 : Convert.ToDecimal(reader["CouponAmunt"])) : 0;
+oPurchases.Discount = Helper.ColumnExists(reader, "Discount") ? ((reader["Discount"] == DBNull.Value) ? 0 : Convert.ToDecimal(reader["Discount"])) : 0;
 oPurchases.Remarks = Helper.ColumnExists(reader, "Remarks") ? reader["Remarks"].ToString() : "";
+oPurchases.PurcheaseReturn = Helper.ColumnExists(reader, "PurcheaseReturn") ? ((reader["PurcheaseReturn"] == DBNull.Value) ? false : Convert.ToBoolean(reader["PurcheaseReturn"])) : false;
 oPurchases.IsActive = Helper.ColumnExists(reader, "IsActive") ? ((reader["IsActive"] == DBNull.Value) ? false : Convert.ToBoolean(reader["IsActive"])) : false;
 oPurchases.IsArchive = Helper.ColumnExists(reader, "IsArchive") ? ((reader["IsArchive"] == DBNull.Value) ? false : Convert.ToBoolean(reader["IsArchive"])) : false;
 oPurchases.CreatedBy = Helper.ColumnExists(reader, "CreatedBy") ? reader["CreatedBy"].ToString() : "";
@@ -231,9 +239,7 @@ oPurchases.CreatedFrom = Helper.ColumnExists(reader, "CreatedFrom") ? reader["Cr
 oPurchases.LastUpdateBy = Helper.ColumnExists(reader, "LastUpdateBy") ? reader["LastUpdateBy"].ToString() : "";
 oPurchases.LastUpdateAt = Helper.ColumnExists(reader, "LastUpdateAt") ? reader["LastUpdateAt"].ToString() : "";
 oPurchases.LastUpdateFrom = Helper.ColumnExists(reader, "LastUpdateFrom") ? reader["LastUpdateFrom"].ToString() : "";
-oPurchases.SupplierName = Helper.ColumnExists(reader, "SupplierName") ? reader["SupplierName"].ToString() : "";
-oPurchases.EmployeeName = Helper.ColumnExists(reader, "EmployeeName") ? reader["EmployeeName"].ToString() : "";
-                return oPurchases;
+return oPurchases;
 }
 catch (Exception ex)
 {

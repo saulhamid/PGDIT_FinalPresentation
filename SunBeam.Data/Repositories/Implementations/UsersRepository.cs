@@ -13,7 +13,7 @@ namespace SunBeam.Data.Repositories.Implementations
 {
 
 
-public class UsersRepository : DBGeneric<User>, IRepository<User>
+public class UsersRepository : DBGeneric<Users>, IRepository<Users>
 {
 
 protected ILogger Logger { get; set; }
@@ -28,7 +28,7 @@ Logger = logger;
 /// </summary>
 /// <param name="entity"></param>
 /// <returns>Message</returns>
-public async Task<string> Insert(User entity)
+public async Task<string> Insert(Users entity)
 {
 try
 {
@@ -70,7 +70,7 @@ throw ex;
 /// </summary>
 /// <param name="entity"></param>
 /// <returns>Message</returns>
-public async Task<string> Update(User entity)
+public async Task<string> Update(Users entity)
 {
 try
 {
@@ -140,7 +140,7 @@ throw ex;
 /// </summary>
 /// <param name="Id"></param>
 /// <returns>Message</returns>
-public async Task<string> IsDelete(int Id,User entity)
+public async Task<string> IsDelete(int Id,Users entity)
 {
 try
 {
@@ -171,7 +171,7 @@ throw ex;
 /// Get All Users
 /// </summary>
 /// <returns>List ofUsers</returns>
-public async Task<IEnumerable<User>> GetAll()
+public async Task<IEnumerable<Users>> GetAll()
 {
 try
 {
@@ -192,7 +192,7 @@ throw ex;
 /// </summary>
 /// <param name="Id"></param>
 /// <returns>Users Object</returns>
-public async Task<User> GetById(int Id)
+public async Task<Users> GetById(int Id)
 {
 try
 {
@@ -214,20 +214,20 @@ throw ex;
 /// </summary>
 /// <param name="sqldatareader"></param>
 /// <returns>Users Object</returns>
-public User Mapping(SqlDataReader reader)
+public Users Mapping(SqlDataReader reader)
 {
 try
 {
-User oUsers = new User();
+Users oUsers = new Users();
 oUsers.Id = Helper.ColumnExists(reader, "Id") ? ((reader["Id"] == DBNull.Value) ? 0 : Convert.ToInt32(reader["Id"])) : 0 ;
-oUsers.FullName = 
-oUsers.UserName = 
-oUsers.Email = 
-oUsers.LogId = 
-oUsers.Password = 
-oUsers.VerificationCode = 
-//oUsers.BranchId = Helper.ColumnExists(reader, "BranchId") ? ((reader["BranchId"] == DBNull.Value) ? 0 : Convert.ToInt32(reader["BranchId"])) : 0 ;
-oUsers.EmployeeId = Helper.ColumnExists(reader, "EmployeeId") ? reader["EmployeeId"].ToString() : "";
+oUsers.FullName = Helper.ColumnExists(reader, "FullName") ? reader["FullName"].ToString() : "";
+oUsers.UserName = Helper.ColumnExists(reader, "UserName") ? reader["UserName"].ToString() : "";
+                oUsers.Email = Helper.ColumnExists(reader, "Email") ? reader["Email"].ToString() : "";
+                oUsers.LogId = Helper.ColumnExists(reader, "LogId") ? reader["LogId"].ToString() : "";
+                oUsers.Password = Helper.ColumnExists(reader, "Password") ? reader["Password"].ToString() : "";
+                oUsers.VerificationCode = Helper.ColumnExists(reader, "VerificationCode") ? reader["VerificationCode"].ToString() : "";
+                //oUsers.BranchId = Helper.ColumnExists(reader, "BranchId") ? ((reader["BranchId"] == DBNull.Value) ? 0 : Convert.ToInt32(reader["BranchId"])) : 0 ;
+                oUsers.EmployeeId = Helper.ColumnExists(reader, "EmployeeId") ? reader["EmployeeId"].ToString() : "";
 oUsers.IsAdmin = Helper.ColumnExists(reader, "IsAdmin") ? ((reader["IsAdmin"] == DBNull.Value) ? false : Convert.ToBoolean(reader["IsAdmin"])) : false;
 oUsers.IsActive = Helper.ColumnExists(reader, "IsActive") ? ((reader["IsActive"] == DBNull.Value) ? false : Convert.ToBoolean(reader["IsActive"])) : false;
 oUsers.CreatedBy = Helper.ColumnExists(reader, "CreatedBy") ? reader["CreatedBy"].ToString() : "";
@@ -249,7 +249,7 @@ throw ex;
 /// Get Id, Name Users
 /// </summary>
 /// <returns>List ofUsers</returns>
-public async Task<IEnumerable<User>> Dropdown()
+public async Task<IEnumerable<Users>> Dropdown()
 {
 try
 {

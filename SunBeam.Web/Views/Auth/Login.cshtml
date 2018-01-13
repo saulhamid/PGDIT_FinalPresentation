@@ -1,4 +1,4 @@
-﻿@model SunBeam.Domain.Models.User
+﻿@model SunBeam.Domain.Models.Users
 @{
     Layout = null;
 }
@@ -27,8 +27,9 @@
 
                                 <img src="~/Images/locker_pic.png" />
                             </div>
-                            <div class=" col-md-5 col-sm-8 col-xs-10 col-md-pull-1">
-                                @using (Html.BeginForm("Login", "Account", FormMethod.Post))
+                            <div class="col-md-5 col-sm-8 col-xs-10 col-md-pull-1">
+                                <div class="alert alert-info">@ViewBag.error</div>
+                                @using (Html.BeginForm("Login", "Auth", FormMethod.Post))
                                 {
                                     @Html.AntiForgeryToken()
                                     @Html.ValidationSummary(true)
@@ -52,6 +53,8 @@
                                         <div class="form-group" style=" width:240px;">
                                             <input type="submit" class="btn btn-login btn-block btn css3-shadow" value="Login" />
                                         </div>
+                                        <div class="col-md-5">@Html.ActionLink("Registration", "Registration", "Auth", new { })</div>
+                                <div class="col-md-5">@Html.ActionLink("Forget Password","ForgetPassword","Auth",new { })</div>
                                 }
                             </div>
                         </div>

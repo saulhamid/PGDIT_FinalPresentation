@@ -10,12 +10,12 @@ using System.Web.Mvc;
 
 namespace SunBeam.Web.Areas.CRM.Controllers
 {
-    public class PurchaseController : Controller
+    public class PurcheaseReturnController : Controller
     {
         private readonly IPurchasesBL repo;
         private readonly IProductsBL prorepo;
         private readonly IPurcheaseDetailsBL prodrepo;
-        public PurchaseController(IPurchasesBL _repo, IProductsBL _prorepo, IPurcheaseDetailsBL _prodrepo)
+        public PurcheaseReturnController(IPurchasesBL _repo, IProductsBL _prorepo, IPurcheaseDetailsBL _prodrepo)
         {
             this.repo = _repo;
             this.prorepo = _prorepo;

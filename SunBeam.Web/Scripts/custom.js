@@ -45,9 +45,7 @@ $(function () {
     });
 });
 
-$("img").on("error", function () {
-    $(this).attr('src', '.~/Files/EmployeeInfo/0-mini.jpg');
-});
+
 function InitAccordions() {
     $(".Accordion").accordion({
         collapsible: true, active: true
@@ -353,9 +351,10 @@ function InitDropDowns() {
                     }
                     else {
                         Listitems += "<option value='" + item.Value + "'>" + item.Text + "</option>";
-                        $(".Dropdown").val(item.Text).trigger('change');
                     }
                 });
+                $(".Dropdown").trigger('change');
+
                 dropdownEl.html(Listitems).addClass("DropdownInited");
             }
         });

@@ -25,7 +25,7 @@ this.logger = logger;
 /// </summary>
 /// <param name="entity"></param>
 /// <returns>Message</returns>
-public async Task<string> InsertUsers(User entity)
+public async Task<string> InsertUsers(Users entity)
 {
 try
 {
@@ -44,7 +44,7 @@ throw ex;
 /// </summary>
 /// <param name="entity"></param>
 /// <returns>Message</returns>
-public async Task<string> UpdateUsers(User entity)
+public async Task<string> UpdateUsers(Users entity)
 {
 try
 {
@@ -63,7 +63,7 @@ throw ex;
 /// </summary>
 /// <param name="Id"></param>
 /// <returns>Message</returns>
-public async Task<string> IsDeleteUsers(string[] IdList, User entity)
+public async Task<string> IsDeleteUsers(string[] IdList, Users entity)
 {
 string result = string.Empty;
 try
@@ -105,7 +105,7 @@ return result;
 /// Get All Users
 /// </summary>
 /// <returns>List ofUsers</returns>
-public async Task<IEnumerable<User>> GetAllUsers()
+public async Task<IEnumerable<Users>> GetAllUsers()
 {
 try
 {
@@ -124,7 +124,7 @@ throw ex;
 /// </summary>
 /// <param name="Id"></param>
 /// <returns>Users Object</returns>
-public async Task<User> GetUsersById(int Id)
+public async Task<Users> GetUsersById(int Id)
 {
 try
 {
@@ -143,7 +143,7 @@ throw ex;
 /// Get Id , Name Users
 /// </summary>
 /// <returns>List ofUsers</returns>
-public async Task<IEnumerable<User>> DropDownUsers()
+public async Task<IEnumerable<Users>> DropDownUsers()
 {
 try
 {

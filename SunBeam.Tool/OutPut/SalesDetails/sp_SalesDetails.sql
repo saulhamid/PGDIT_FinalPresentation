@@ -3,7 +3,7 @@ GO
 SET QUOTED_IDENTIFIER ON
 GO
 
-CREATE  proc [dbo].[sp_SalesDetails]
+alter  proc [dbo].[sp_SalesDetails]
 (
 @Id		int = null,
 @SalesId		int = null,
@@ -41,7 +41,6 @@ if(@pOptions=1)
 begin
 INSERT INTO SalesDetails
 (
-Id,
 SalesId,
 ProductId,
 ProductName,
@@ -54,7 +53,7 @@ Bonus,
 AssaignQuantity,
 SalesQuantity,
 [Return],
-Replace,
+[Replace],
 TotalSlupPrice,
 WithOurDiscountPrice,
 TotalAmount,
@@ -68,7 +67,6 @@ CreatedFrom
 )
 VALUES
 (	
-@Id,
 @SalesId,
 @ProductId,
 @ProductName,
@@ -130,9 +128,6 @@ TotalAmount	=	@TotalAmount ,
 Remarks	=	@Remarks ,
 IsActive	=	@IsActive ,
 IsArchive	=	@IsArchive ,
-CreatedBy	=	@CreatedBy ,
-CreatedAt	=	@CreatedAt ,
-CreatedFrom	=	@CreatedFrom ,
 LastUpdateBy	=	@LastUpdateBy ,
 LastUpdateAt	=	@LastUpdateAt ,
 LastUpdateFrom	=	@LastUpdateFrom 
@@ -232,7 +227,7 @@ end
 
 if(@pOptions=7)
 begin	        
-select Id,Name  from SalesDetails Where IsActive=1 and IsArchive=0;;
+select Id  from SalesDetails Where IsActive=1 and IsArchive=0;;
 if(@@ROWCOUNT=0)
 SET @Msg='Data Not Found';
 end

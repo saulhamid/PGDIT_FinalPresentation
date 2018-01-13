@@ -16,15 +16,15 @@ namespace SunBeam.Domain.Models
     public partial class PurcheaseReturnDetails: BaseEntity
     {
         public int Id { get; set; }
-        public Nullable<int> PurchaseReturnId { get; set; }
-        public Nullable<int> ProductId { get; set; }
+        public int PurchaseReturnId { get; set; }
+        public int ProductId { get; set; }
         public string ProductName { get; set; }
         public string ProductCode { get; set; }
-        public Nullable<decimal> UnitePrice { get; set; }
+        public decimal UnitePrice { get; set; }
         public string Data { get; set; }
-        public Nullable<decimal> Quantity { get; set; }
-        public Nullable<decimal> Discount { get; set; }
-        public Nullable<decimal> TotalPrice { get; set; }
+        public decimal Quantity { get; set; }
+        public decimal Discount { get; set; }
+        public decimal TotalPrice { get; set; }
      
     }
 }

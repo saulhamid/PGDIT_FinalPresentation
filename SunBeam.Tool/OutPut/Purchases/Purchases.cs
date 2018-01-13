@@ -10,7 +10,9 @@ namespace SunBeam.Domain.Models
       public string Date { get; set; }
       public string CouponName { get; set; }
       public decimal CouponAmunt { get; set; }
+      public decimal Discount { get; set; }
       public string Remarks { get; set; }
+      public bool PurcheaseReturn { get; set; }
       public bool IsActive { get; set; }
       public bool IsArchive { get; set; }
       public string CreatedBy { get; set; }

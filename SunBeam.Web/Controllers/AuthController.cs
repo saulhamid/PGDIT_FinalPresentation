@@ -30,12 +30,12 @@ namespace SunBeam.Web.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Login(User model, string returnUrl)
+        public async Task<ActionResult> Login(Users model, string returnUrl)
         {
             try
             {
-                var count = repo.GetAllUsers().Result.FirstOrDefault(m => m.UserName.TrimEnd().Equals(model.UserName.TrimEnd()) && m.Password.TrimEnd() == model.Password.TrimEnd());
-                if (count != null)
+                var count = repo.GetAllUsers().Result.Any(m => m.UserName.Equals(model.UserName) && m.Password == model.Password);
+                if (count)
                 {
                     FormsAuthentication.SetAuthCookie(model.UserName, model.Remember);
                     ////return RedirectToAction("Index", "UOM", "Config");
@@ -45,21 +45,22 @@ namespace SunBeam.Web.Controllers
                 }
                 else
                 {
-                    ModelState.AddModelError("", "The user name or password provided is incorrect.");
+                    ViewBag.error = "The user name or password provided is incorrect.";
+                    return View(model);
                 }
             }
             catch (Exception ex)
             {
+                ViewBag.error = ex.Message.ToString();
                 return View(model);
             }
-            return RedirectToAction("Index", "Home");
+            //return RedirectToAction("Index", "Home");
             //return RedirectToAction("Index", "Home", new { area = "Config" });
 
             // If we got this far, something failed, redisplay form
         }
         [HttpGet]
         [AllowAnonymous]
-        [ValidateAntiForgeryToken]
         public ActionResult Registration()
         {
             return View();
@@ -67,21 +68,31 @@ namespace SunBeam.Web.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Registration(User data)
+        public async Task<ActionResult> Registration(Users data)
         {
             string result = string.Empty;
             try
             {
+                var cc =  repo.GetAllUsers().Result.Any(x => x.UserName.Equals(data.UserName) || x.Email.Equals(data.Email));
+                if (cc)
+                {
+                    ViewBag.error = "User Name Or Email Already Exit";
+                    return View();
+                }
                 result = await repo.InsertUsers(data);
+                ViewBag.error = result;
                 return View("Login");
             }
             catch (Exception ex)
             {
                 ViewBag.error = ex.Message.ToString(); ;
                 return View();
-
             }
-
+        }
+        public ActionResult logout()
+        {
+            FormsAuthentication.SignOut();
+            return View("Login");
         }
     }
 }

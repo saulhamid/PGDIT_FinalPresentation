@@ -64,6 +64,7 @@
     <Compile Include="Implementations\CustomersBL.cs" />
     <Compile Include="Implementations\EmployeeBL.cs" />
     <Compile Include="Implementations\EnumCountryBL.cs" />
+    <Compile Include="Implementations\PurcheaseReturnsBL.cs" />
     <Compile Include="Implementations\StockDetailsBL.cs" />
     <Compile Include="Implementations\UsersBL.cs" />
     <Compile Include="Interfaces\IStockDetailsBL.cs" />
@@ -77,7 +78,7 @@
     <Compile Include="Implementations\PurchasesBL.cs" />
     <Compile Include="Implementations\PurcheaseDetailsBL.cs" />
     <Compile Include="Implementations\PurcheaseReturnDetailsBL.cs" />
-    <Compile Include="Implementations\PurcheaseReturnsBL.cs" />
+    <Compile Include="Implementations\xxPurcheaseReturnsBL.cs" />
     <Compile Include="Implementations\SalesBL.cs" />
     <Compile Include="Implementations\SalesDetailsBL.cs" />
     <Compile Include="Implementations\StocksBL.cs" />

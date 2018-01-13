@@ -25,6 +25,7 @@ namespace SunBeam.Domain.Models
         public decimal Discount { get; set; }
         public string CouponName { get; set; }
         public decimal CouponAmunt { get; set; }
+        public bool PurcheaseReturn { get; set; }
         public IEnumerable<PurcheaseDetails> PurcheaseDetails { get; set; }
 
     }

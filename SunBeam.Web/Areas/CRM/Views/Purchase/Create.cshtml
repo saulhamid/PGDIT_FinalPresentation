@@ -209,15 +209,15 @@
         var quan = $('.quan').val();
         debugger;
         if (proid === "" || typeof proid === 'undefined ') {
-            ShowAlert("Fail", "Operation Fail");
+            ShowAlert("Fail", "Oops! Please Select Product");
             return;
         }
         if (unitprice === "" || typeof unitprice === 'undefined ') {
-            ShowAlert("Fail", "Operation Fail");
+            ShowAlert("Fail", "Oops! Enter Unit Price");
             return;
         }
         if (quan === "" || typeof quan === 'undefined ') {
-            ShowAlert("Fail", "Operation Fail");
+            ShowAlert("Fail", "Oops! Enter Unit Quntity");
             return;
         }
         var proidd;
@@ -230,7 +230,7 @@
             }
                 });
                 if (aa > 0) {
-                    ShowAlert("Fail", "Operation Fail");
+                    ShowAlert("Fail", "This Product alread Added");
                     return;
                 }
         var url = '@Url.Action("/PurcheaseDetail")?proid=' + proid + '&unitprice=' + unitprice + '&quantity=' + quan;
