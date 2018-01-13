@@ -8,6 +8,7 @@ namespace SunBeam.Domain.Models
       public int ProductId { get; set; }
       public string ProductName { get; set; }
         public decimal UnitePrice { get; set; }
+
       public string Date { get; set; }
       public decimal Quantity { get; set; }
       public decimal Discount { get; set; }
